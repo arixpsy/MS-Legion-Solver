@@ -6,6 +6,16 @@ export default class LegionBoard {
 	selectedArea: boolean[][] = $state([[]])
 	state: number[][] = $state([[]])
 
+	blocksToFill: number = $derived.by(() => {
+		let count = 0
+		for (let row = 0; row < this.selectedArea.length; ++row) {
+			for (let col = 0; col < this.selectedArea[row].length; ++col) {
+				if (this.selectedArea[row][col]) count += 1
+			}
+		}
+		return count
+	})
+
 	constructor(playerLevel: number) {
 		this.setBoardSize(playerLevel)
 	}

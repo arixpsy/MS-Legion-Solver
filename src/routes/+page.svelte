@@ -24,4 +24,6 @@
 	</div>
 
 	<LegionBoardComponent {board} />
+
+	<p>Blocks to Fill: {board.blocksToFill}</p>
 </div>
