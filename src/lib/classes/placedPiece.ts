@@ -1,7 +1,7 @@
-import { Piece } from '$lib/classes/piece'
-import { Point } from '$lib/classes/point'
+import Piece from './piece'
+import Point from './point'
 
-export class PlacedPiece {
+export default class PlacedPiece {
 	point: Point
 	piece: Piece
 

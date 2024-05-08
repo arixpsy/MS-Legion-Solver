@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { PlacedPiece } from '$lib/classes/placedPiece'
-	import { BlockType } from '$lib/classes/shape'
+	import { PlacedPiece } from '$lib/classes'
+	import { BlockType } from '$lib/types'
 
 	type PlacedPieceProps = {
 		placedPiece: PlacedPiece

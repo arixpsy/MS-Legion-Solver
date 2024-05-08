@@ -1,6 +1,6 @@
-import type { Shape } from '$lib/classes/shape'
+import Shape from './shape'
 
-export class Piece {
+export default class Piece {
 	shape: Shape
 
 	constructor(shape: Shape) {

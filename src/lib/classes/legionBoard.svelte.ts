@@ -1,4 +1,4 @@
-export class LegionBoard {
+export default class LegionBoard {
 	size = $state({
 		height: 0,
 		width: 0

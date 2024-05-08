@@ -1,32 +1,6 @@
-export const ShapeType = {
-	Lv60: 'Lv60',
-	Lv100: 'Lv100',
-	Lv140ArcherMageThief: 'Lv140ArcherMageThief',
-	Lv140PirateWarrior: 'Lv140PirateWarrior',
-	Lv200Archer: 'Lv200Archer',
-	Lv200Mage: 'Lv200Mage',
-	Lv200Pirate: 'Lv200Pirate',
-	Lv200Thief: 'Lv200Thief',
-	Lv200Warrior: 'Lv200Warrior',
-	LV250Archer: 'LV250Archer',
-	Lv250Mage: 'Lv250Mage',
-	Lv250Pirate: 'Lv250Pirate',
-	Lv250Thief: 'Lv250Thief',
-	Lv250Warrior: 'Lv250Warrior',
-	Lv250Xenon: 'Lv250Xenon'
-} as const
+import { ShapeType } from '$lib/types'
 
-type ShapeType = (typeof ShapeType)[keyof typeof ShapeType]
-
-export const BlockType = {
-	Empty: 0,
-	Root: 1,
-	Edge: 2
-} as const
-
-type BlockType = (typeof BlockType)[keyof typeof BlockType]
-
-export class Shape {
+export default class Shape {
 	static Lv60 = [[2]]
 	static Lv100 = [[2, 1]]
 	static Lv140ArcherMageThief = [[1, 2, 1]]
