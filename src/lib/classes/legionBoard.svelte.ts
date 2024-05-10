@@ -1,3 +1,5 @@
+import { Piece, PlacedPiece, Point } from '$lib/classes'
+
 export default class LegionBoard {
 	size = $state({
 		height: 0,
@@ -5,6 +7,8 @@ export default class LegionBoard {
 	})
 	selectedArea: boolean[][] = $state([[]])
 	state: number[][] = $state([[]])
+	middlePoints: Array<Point> = $state([])
+	placedPieces: Array<PlacedPiece> = $state([])
 
 	blocksToFill: number = $derived.by(() => {
 		let count = 0
@@ -51,9 +55,19 @@ export default class LegionBoard {
 
 		this.state = Array.from({ length: height }, () => Array(width).fill(0))
 		this.selectedArea = Array.from({ length: height }, () => Array(width).fill(false))
+		this.middlePoints = [
+			new Point(width / 2 - 1, height / 2 - 1),
+			new Point(width / 2, height / 2 - 1),
+			new Point(width / 2 - 1, height / 2),
+			new Point(width / 2, height / 2)
+		]
 	}
 
 	setSelectedArea(rowIndex: number, colIndex: number, isSelected: boolean) {
 		this.selectedArea[rowIndex][colIndex] = isSelected
+	}
+
+	addPlacedPiece(point: Point, piece: Piece) {
+		this.placedPieces.push(new PlacedPiece(point, piece))
 	}
 }

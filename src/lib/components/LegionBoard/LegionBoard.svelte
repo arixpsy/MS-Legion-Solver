@@ -105,7 +105,7 @@
 		</div>
 	{/each}
 
-	<!-- {#each placedPieces as placedPiece}
+	{#each  board.placedPieces as placedPiece}
 		<PlacedPieceComponent {placedPiece} />
-	{/each} -->
+	{/each}
 </div>
