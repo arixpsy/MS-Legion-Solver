@@ -1,5 +1,6 @@
 export { default as LegionBoard } from './legionBoard.svelte'
-export { default as Piece } from './piece'
+export { default as Piece } from './piece.svelte'
 export { default as PlacedPiece } from './placedPiece'
 export { default as Point } from './point'
 export { default as Shape } from './shape'
+export { default as Solver } from './solver'
