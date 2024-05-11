@@ -105,7 +105,9 @@
 		</div>
 	{/each}
 
-	{#each  board.placedPieces as placedPiece}
-		<PlacedPieceComponent {placedPiece} />
+	{#each board.placedPieces as placedPiece}
+		{#key placedPiece.id}
+			<PlacedPieceComponent {placedPiece} />
+		{/key}
 	{/each}
 </div>

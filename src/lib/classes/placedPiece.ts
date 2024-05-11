@@ -10,6 +10,10 @@ export default class PlacedPiece {
 		this.piece = piece
 	}
 
+	get id() {
+		return this.piece.id
+	}
+
 	get shape() {
 		return this.piece.shape
 	}
