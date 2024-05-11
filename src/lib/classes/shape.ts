@@ -1,4 +1,4 @@
-import { ShapeType } from '$lib/types'
+import { BlockType, ShapeType } from '$lib/types'
 
 export default class Shape {
 	static Lv60 = [[2]]
@@ -51,12 +51,12 @@ export default class Shape {
 	]
 
 	shapeType: ShapeType
-	layout: Array<Array<number>>
+	layout: Array<Array<BlockType>>
 	blockCount: number
 
 	constructor(shapeType: ShapeType) {
 		this.shapeType = shapeType
-		this.layout = Shape[shapeType]
+		this.layout = Shape[shapeType] as Array<Array<BlockType>>
 		let blockCount = 0
 		for (let i = 0; i < this.layout.length; ++i) {
 			for (let j = 0; j < this.layout[i].length; ++j) {
@@ -66,5 +66,14 @@ export default class Shape {
 			}
 		}
 		this.blockCount = blockCount
+	}
+
+	canFlip() {
+		if (this.shapeType === ShapeType.Lv200Pirate) return true
+		if (this.shapeType === ShapeType.Lv200Thief) return true
+		if (this.shapeType === ShapeType.Lv250Pirate) return true
+		if (this.shapeType === ShapeType.Lv250Warrior) return true
+		if (this.shapeType === ShapeType.Lv250Xenon) return true
+		return false
 	}
 }
