@@ -1,4 +1,4 @@
-import Piece from './piece'
+import Piece from './piece.svelte'
 import Point from './point'
 
 export default class PlacedPiece {
@@ -15,6 +15,6 @@ export default class PlacedPiece {
 	}
 
 	get middleOffset() {
-		return this.piece.middleOffset()
+		return this.piece.middleOffset
 	}
 }

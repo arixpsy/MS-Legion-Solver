@@ -1,13 +1,10 @@
+import { nanoid } from 'nanoid'
 import Shape from './shape'
 
 export default class Piece {
+	id: string
 	shape: Shape
-
-	constructor(shape: Shape) {
-		this.shape = shape
-	}
-
-	middleOffset() {
+	middleOffset: { x: number; y: number } = $derived.by(() => {
 		let offsetX = 0
 		let offsetY = 0
 
@@ -20,6 +17,19 @@ export default class Piece {
 			}
 		}
 
-		return { offsetX, offsetY }
+		return { x: offsetX, y: offsetY }
+	})
+
+	constructor(shape: Shape) {
+		this.id = nanoid()
+		this.shape = shape
+	}
+
+	flipPiece() {
+		// TODO:
+	}
+
+	rotatePiece() {
+		// TODO:
 	}
 }

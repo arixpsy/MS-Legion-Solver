@@ -8,7 +8,7 @@
 
 	let { placedPiece }: PlacedPieceProps = $props()
 	let { shape, point } = placedPiece
-	let { offsetX, offsetY } = placedPiece.middleOffset
+	let { x: offsetX, y: offsetY } = placedPiece.middleOffset
 	let topOffset = point.y * 28 - offsetY * 28
 	let leftOffset = point.x * 28 - offsetX * 28
 </script>
