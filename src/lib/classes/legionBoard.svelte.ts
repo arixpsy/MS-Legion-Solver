@@ -67,7 +67,15 @@ export default class LegionBoard {
 		this.selectedArea[rowIndex][colIndex] = isSelected
 	}
 
-	addPlacedPiece(point: Point, piece: Piece) {
+	addPiece(point: Point, piece: Piece) {
 		this.placedPieces.push(new PlacedPiece(point, piece))
+	}
+
+	addPlacedPiece(placedPiece: PlacedPiece) {
+		this.placedPieces.push(placedPiece)
+	}
+
+	removeLastPiece() {
+		this.placedPieces.pop()
 	}
 }
