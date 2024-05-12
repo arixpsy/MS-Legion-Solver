@@ -12,8 +12,8 @@ export default class LegionBoard {
 
 	blocksToFill: number = $derived.by(() => {
 		let count = 0
-		for (let row = 0; row < this.selectedArea.length; ++row) {
-			for (let col = 0; col < this.selectedArea[row].length; ++col) {
+		for (let row = 0; row < this.selectedArea.length; row++) {
+			for (let col = 0; col < this.selectedArea[row].length; col++) {
 				if (this.selectedArea[row][col]) count += 1
 			}
 		}

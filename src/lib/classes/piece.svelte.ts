@@ -8,8 +8,8 @@ export default class Piece {
 		let offsetX = 0
 		let offsetY = 0
 
-		for (let row = 0; row < this.shape.layout.length; ++row) {
-			for (let col = 0; col < this.shape.layout[row].length; ++col) {
+		for (let row = 0; row < this.shape.layout.length; row++) {
+			for (let col = 0; col < this.shape.layout[row].length; col++) {
 				if (this.shape.layout[row][col] === 2) {
 					offsetX = col
 					offsetY = row
@@ -20,16 +20,16 @@ export default class Piece {
 		return { x: offsetX, y: offsetY }
 	})
 
-	constructor(shape: Shape) {
-		this.id = nanoid()
+	constructor({ id, shape }: { id?: string; shape: Shape }) {
+		this.id = id || nanoid()
 		this.shape = shape
 	}
 
-	flipPiece() {
-		// TODO:
+	get rotation() {
+		return this.shape.rotation
 	}
 
-	rotatePiece() {
-		// TODO:
+	get isFlipped() {
+		return this.shape.isFlipped
 	}
 }
