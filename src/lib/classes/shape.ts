@@ -1,4 +1,4 @@
-import { hflip, rotate90, rotate180, rotate270,  } from '2d-array-rotation'
+import { hflip, rotate90, rotate180, rotate270 } from '2d-array-rotation'
 import { BlockType, ShapeType } from '$lib/types'
 
 export default class Shape {
