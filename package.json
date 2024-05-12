@@ -36,6 +36,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"2d-array-rotation": "^2.1.1",
 		"clsx": "^2.1.1",
 		"nanoid": "^5.0.7",
 		"tailwind-merge": "^2.3.0"

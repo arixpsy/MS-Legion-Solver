@@ -1,3 +1,4 @@
+import { hflip, rotate90, rotate180, rotate270,  } from '2d-array-rotation'
 import { BlockType, ShapeType } from '$lib/types'
 
 export default class Shape {
@@ -52,15 +53,37 @@ export default class Shape {
 
 	shapeType: ShapeType
 	layout: Array<Array<BlockType>>
+	rotation: number
+	isFlipped: boolean
 	blockCount: number
 
-	constructor(shapeType: ShapeType) {
+	constructor(shapeType: ShapeType, rotation = 0, isFlipped = false) {
 		this.shapeType = shapeType
-		this.layout = Shape[shapeType] as Array<Array<BlockType>>
+
+		switch (rotation) {
+			case 270:
+				this.layout = rotate270(Shape[shapeType]) as Array<Array<BlockType>>
+				break
+			case 180:
+				this.layout = rotate180(Shape[shapeType]) as Array<Array<BlockType>>
+				break
+			case 90:
+				this.layout = rotate90(Shape[shapeType]) as Array<Array<BlockType>>
+				break
+			default:
+				this.layout = Shape[shapeType] as Array<Array<BlockType>>
+		}
+
+		this.rotation = rotation
+		this.isFlipped = isFlipped
+		if (isFlipped) {
+			this.layout = hflip(this.layout)
+		}
+
 		let blockCount = 0
-		for (let i = 0; i < this.layout.length; ++i) {
-			for (let j = 0; j < this.layout[i].length; ++j) {
-				if (this.layout[i][j] > 0) {
+		for (let row = 0; row < this.layout.length; row++) {
+			for (let col = 0; col < this.layout[row].length; col++) {
+				if (this.layout[row][col] > 0) {
 					blockCount++
 				}
 			}
