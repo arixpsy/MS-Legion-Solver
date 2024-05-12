@@ -6,7 +6,7 @@ export default class LegionBoard {
 		width: 0
 	})
 	selectedArea: boolean[][] = $state([[]])
-	state: number[][] = $state([[]])
+	filledArea: boolean[][] = $state([[]])
 	middlePoints: Array<Point> = $state([])
 	placedPieces: Array<PlacedPiece> = $state([])
 
@@ -53,7 +53,7 @@ export default class LegionBoard {
 			width
 		}
 
-		this.state = Array.from({ length: height }, () => Array(width).fill(0))
+		this.filledArea = Array.from({ length: height }, () => Array(width).fill(false))
 		this.selectedArea = Array.from({ length: height }, () => Array(width).fill(false))
 		this.middlePoints = [
 			new Point(width / 2 - 1, height / 2 - 1),
@@ -73,9 +73,11 @@ export default class LegionBoard {
 
 	addPlacedPiece(placedPiece: PlacedPiece) {
 		this.placedPieces.push(placedPiece)
+		// TODO: set state to true
 	}
 
 	removeLastPiece() {
 		this.placedPieces.pop()
+		// TODO: set state to false
 	}
 }
