@@ -4,7 +4,12 @@ import Shape from './shape'
 export default class Piece {
 	id: string
 	shape: Shape
-	middleOffset: { x: number; y: number } = $derived.by(() => {
+	middleOffset: { x: number; y: number }
+
+	constructor({ id, shape }: { id?: string; shape: Shape }) {
+		this.id = id || nanoid()
+		this.shape = shape
+
 		let offsetX = 0
 		let offsetY = 0
 
@@ -17,12 +22,7 @@ export default class Piece {
 			}
 		}
 
-		return { x: offsetX, y: offsetY }
-	})
-
-	constructor({ id, shape }: { id?: string; shape: Shape }) {
-		this.id = id || nanoid()
-		this.shape = shape
+		this.middleOffset =  { x: offsetX, y: offsetY }
 	}
 
 	get rotation() {
