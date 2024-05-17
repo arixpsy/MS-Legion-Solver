@@ -99,4 +99,10 @@ export default class Shape {
 		if (this.shapeType === ShapeType.Lv250Xenon) return true
 		return false
 	}
+
+	canRotate() {
+		if (this.shapeType === ShapeType.Lv60) return false
+		if (this.shapeType === ShapeType.Lv250Mage) return false
+		return true
+	}
 }
