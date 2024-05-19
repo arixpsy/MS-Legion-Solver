@@ -106,7 +106,7 @@
 	{/each}
 
 	{#each board.placedPieces as placedPiece}
-		{#key placedPiece.id}
+		{#key [placedPiece.id, placedPiece.shape]}
 			<PlacedPieceComponent {placedPiece} />
 		{/key}
 	{/each}
