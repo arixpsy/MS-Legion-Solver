@@ -1,4 +1,5 @@
-import { Piece, PlacedPiece, Point } from '$lib/classes'
+import { PlacedPiece, Point } from '$lib/classes'
+import { BlockType } from '$lib/types'
 
 export default class LegionBoard {
 	size = $state({
@@ -6,7 +7,8 @@ export default class LegionBoard {
 		width: 0
 	})
 	selectedArea: boolean[][] = $state([[]])
-	filledArea: boolean[][] = $state([[]])
+	filledArea:  boolean[][] = $state([[]])
+	filledPoints: Array<Point> = []
 	middlePoints: Array<Point> = $state([])
 	placedPieces: Array<PlacedPiece> = $state([])
 
@@ -67,17 +69,46 @@ export default class LegionBoard {
 		this.selectedArea[rowIndex][colIndex] = isSelected
 	}
 
-	addPiece(point: Point, piece: Piece) {
-		this.placedPieces.push(new PlacedPiece(point, piece))
-	}
-
 	addPlacedPiece(placedPiece: PlacedPiece) {
 		this.placedPieces.push(placedPiece)
-		// TODO: set state to true
+
+		const { piece, point } = placedPiece
+		const shapeLayout = piece.shape.layout
+		const pieceMiddleOffset = piece.middleOffset
+
+		for (let row = 0; row < shapeLayout.length; ++row) {
+			for (let col = 0; col < shapeLayout[row].length; ++col) {
+				if (shapeLayout[row][col] !== BlockType.Empty) {
+					// convert shape point to point on the board
+					const boardX = point.x - (pieceMiddleOffset.x - col)
+					const boardY = point.y - (pieceMiddleOffset.y - row)
+
+					this.filledArea[boardY][boardX] = true
+					this.filledPoints.push(new Point(boardX, boardY))
+				}
+			}
+		}
 	}
 
 	removeLastPiece() {
-		this.placedPieces.pop()
-		// TODO: set state to false
+		if (this.placedPieces.length === 0) throw Error('No piece to remove')
+
+		const placedPiece = this.placedPieces.pop() as PlacedPiece
+		const { piece, point } = placedPiece
+		const shapeLayout = piece.shape.layout
+		const pieceMiddleOffset = piece.middleOffset
+
+		for (let row = 0; row < shapeLayout.length; ++row) {
+			for (let col = 0; col < shapeLayout[row].length; ++col) {
+				if (shapeLayout[row][col] !== BlockType.Empty) {
+					// convert shape point to point on the board
+					const boardX = point.x - (pieceMiddleOffset.x - col)
+					const boardY = point.y - (pieceMiddleOffset.y - row)
+
+					this.filledArea[boardY][boardX] = false
+					this.filledPoints.pop()
+				}
+			}
+		}
 	}
 }
