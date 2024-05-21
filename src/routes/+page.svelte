@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { LegionBoard, Shape, Solver } from '$lib/classes'
 	import { LegionBoard as LegionBoardComponent, LegionUI } from '$lib/components'
-	import { ShapeType, BlockType } from '$lib/types'
+	import PieceSelector from '$lib/components/PieceSelector/PieceSelector.svelte'
+	import { ShapeType } from '$lib/types'
 	import { initPieceCount } from '$lib/utils/functions'
 
 	let board = new LegionBoard(500)
@@ -31,35 +32,7 @@
 	<LegionUI>
 		<LegionBoardComponent {board} slot="legion-board" />
 
-		<div class="grid grid-cols-4 my-3" slot="piece-selector">
-			{#each Object.values(ShapeType) as s}
-				{@const shape = new Shape(s)}
-				<div class="flex justify-between p-2 border h-16 items-center">
-					<div class="flex flex-col">
-						{#each shape.layout as shapeRow}
-							<div class="flex">
-								{#each shapeRow as colValue}
-									{@const isEmptyBlock = colValue === BlockType.Empty}
-									<div
-										class="h-3 w-3 border"
-										class:bg-blue-300={!isEmptyBlock}
-										class:border-blue-300={!isEmptyBlock}
-										class:bg-transparent={isEmptyBlock}
-										class:border-transparent={isEmptyBlock}
-									></div>
-								{/each}
-							</div>
-						{/each}
-					</div>
-
-					<input
-						type="number"
-						class="w-10 bg-slate-200 rounded-md text-center"
-						bind:value={shapeCountMap[s]}
-					/>
-				</div>
-			{/each}
-		</div>
+		<PieceSelector {shapeCountMap} slot="piece-selector" />
 
 		<div class="flex flex-col border border-gray-400" slot="left-area">
 			<label for="playerLevel"> Player Level:</label>
