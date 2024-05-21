@@ -8,18 +8,20 @@
 >
 	<!-- Left Side -->
 	<div class="w-[582px] flex flex-col">
-		<div class="w-full h-[478px]">
-      <!-- Legion Board -->
-      <slot name='legion-board' />
-    </div>
-    <div class="w-full h-[43px]">
-      <slot name='board-info' />
-    </div>
-    <div class="w-full h-[200px]">
-      <slot name='piece-selector' />
-    </div>
+		<div class="w-full h-[485px]">
+			<!-- Legion Board -->
+			<slot name="legion-board" />
+		</div>
+		<div class="w-full h-[36px]">
+			<slot name="board-info" />
+		</div>
+		<div class="w-full h-[194px]">
+			<slot name="piece-selector" />
+		</div>
 	</div>
 
 	<!-- Right Side -->
-	<div class="bg-green-600 w-[392px] opacity-20"></div>
+	<div class="w-[392px]">
+		<slot name="left-area" />
+	</div>
 </div>

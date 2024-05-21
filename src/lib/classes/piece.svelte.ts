@@ -22,7 +22,7 @@ export default class Piece {
 			}
 		}
 
-		this.middleOffset =  { x: offsetX, y: offsetY }
+		this.middleOffset = { x: offsetX, y: offsetY }
 	}
 
 	get rotation() {

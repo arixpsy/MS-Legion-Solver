@@ -7,7 +7,7 @@ export default class LegionBoard {
 		width: 0
 	})
 	selectedArea: boolean[][] = $state([[]])
-	filledArea:  boolean[][] = $state([[]])
+	filledArea: boolean[][] = $state([[]])
 	filledPoints: Array<Point> = []
 	middlePoints: Array<Point> = $state([])
 	placedPieces: Array<PlacedPiece> = $state([])
