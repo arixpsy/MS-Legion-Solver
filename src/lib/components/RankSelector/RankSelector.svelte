@@ -184,7 +184,7 @@
 </script>
 
 <div
-	class="h-[400px] relative bg-no-repeat bg-top"
+	class="h-[266px] relative bg-no-repeat bg-top"
 	style:background-image={`url(${legionTitleImage})`}
 >
 	<div class="absolute top-[15px] left-[10px]">
