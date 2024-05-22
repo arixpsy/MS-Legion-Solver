@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { LegionBoard, Shape, Solver } from '$lib/classes'
 	import {
+		BoardInfoSection,
 		LegionBoard as LegionBoardComponent,
 		LegionUI,
 		PieceInfoSection,
@@ -37,7 +38,7 @@
 		return blockCount
 	}
 
-	function handleSolve() {
+	function solveLegionBoard() {
 		const solver = new Solver(board, shapeCountMap)
 		solver.solve()
 	}
@@ -46,11 +47,15 @@
 <div class="min-h-screen flex justify-center items-center flex-col bg-stone-700">
 	<LegionUI>
 		<LegionBoardComponent {board} slot="legion-board" />
+		<PieceSelector {shapeCountMap} slot="piece-selector" />
+		<PieceInfoSection {totalPieceCount} pieceLimit={board.pieceLimit} slot="piece-info" />
 
 		<RankSelector bind:playerLevel slot="legion-rank" />
-
-		<PieceSelector {shapeCountMap} slot="piece-selector" />
-
-		<PieceInfoSection {totalPieceCount} pieceLimit={board.pieceLimit} slot="piece-info" />
+		<BoardInfoSection
+			{totalShapeBlockCount}
+			blocksToFill={board.blocksToFill}
+			handleClickSolve={solveLegionBoard}
+			slot="board-info"
+		/>
 	</LegionUI>
 </div>
