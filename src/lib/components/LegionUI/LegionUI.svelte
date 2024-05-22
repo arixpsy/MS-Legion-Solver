@@ -13,7 +13,7 @@
 			<slot name="legion-board" />
 		</div>
 		<div class="w-full h-[44px]">
-			<slot name="board-info" />
+			<slot name="piece-info" />
 		</div>
 		<div class="w-full h-[194px]">
 			<slot name="piece-selector" />
@@ -24,6 +24,7 @@
 	<div class="w-[392px]">
 		<div class="h-[436px]">
 			<slot name="legion-rank" />
+			<slot name="board-info" />
 		</div>
 	</div>
 </div>

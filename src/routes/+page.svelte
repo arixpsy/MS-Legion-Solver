@@ -3,6 +3,7 @@
 	import {
 		LegionBoard as LegionBoardComponent,
 		LegionUI,
+		PieceInfoSection,
 		PieceSelector,
 		RankSelector
 	} from '$lib/components'
@@ -50,17 +51,6 @@
 
 		<PieceSelector {shapeCountMap} slot="piece-selector" />
 
-		<div class="flex items-center h-full" slot="board-info">
-			<div
-				class="ml-[100px] mt-[4px] h-[16px] text-center text-sm font-bold text-gray-500 w-[65px]"
-			>
-				<span class="text-white">{totalPieceCount}</span> / {board.pieceLimit}
-			</div>
-			<div class="flex gap-10">
-				<p>Blocks available: {totalShapeBlockCount}</p>
-				<p>Blocks to Fill: {board.blocksToFill}</p>
-				<button onclick={handleSolve}>Solve</button>
-			</div>
-		</div>
+		<PieceInfoSection {totalPieceCount} pieceLimit={board.pieceLimit} slot="piece-info" />
 	</LegionUI>
 </div>
