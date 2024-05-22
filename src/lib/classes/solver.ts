@@ -138,7 +138,7 @@ export default class Solver {
 				const placedPiece = new PlacedPiece(currentPoint, currentPiece)
 				this.board.addPlacedPiece(placedPiece)
 				history.push(placedPiece)
-				await this.sleep(1)
+				// await this.sleep(1)
 
 				if (history.length === this.pieces.length - 1) {
 					return true
