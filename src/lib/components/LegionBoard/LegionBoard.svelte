@@ -28,9 +28,9 @@
 	}
 </script>
 
-<div class="w-full h-full grid justify-center items-center">
+<div class="w-full h-full grid justify-center items-center overflow-hidden">
 	<div
-		class="flex flex-col relative overflow-hidden gap-[1px] bottom-[4px] right-[1px] hide-outer-tiles"
+		class="flex flex-col relative overflow-hidden gap-[1px] bottom-[-1px] right-[1px] hide-outer-tiles"
 	>
 		{#each board.selectedArea as rowData, rindex}
 			<div class="flex gap-[1px]">
@@ -57,6 +57,16 @@
 
 <style>
 	.hide-outer-tiles {
-		box-shadow: 0px 0px 1000px black;
+		--shadow-color: rgba(27, 27, 27, 0.5);
+
+		box-shadow:
+			100px 0px 2000px var(--shadow-color),
+			-100px 0px 2000px var(--shadow-color),
+			0px 100px 2000px var(--shadow-color),
+			0px -100px 2000px var(--shadow-color),
+			-150px -150px 2000px var(--shadow-color),
+			-150px 150px 2000px var(--shadow-color),
+			150px -150px 2000px var(--shadow-color),
+			150px 150px 2000px var(--shadow-color);
 	}
 </style>

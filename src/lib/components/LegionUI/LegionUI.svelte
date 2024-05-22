@@ -8,11 +8,11 @@
 >
 	<!-- Left Side -->
 	<div class="w-[582px] flex flex-col">
-		<div class="w-full h-[485px]">
+		<div class="w-full h-[476px]">
 			<!-- Legion Board -->
 			<slot name="legion-board" />
 		</div>
-		<div class="w-full h-[36px]">
+		<div class="w-full h-[44px]">
 			<slot name="board-info" />
 		</div>
 		<div class="w-full h-[194px]">
@@ -22,6 +22,8 @@
 
 	<!-- Right Side -->
 	<div class="w-[392px]">
-		<slot name="left-area" />
+		<div class="h-[436px]">
+			<slot name="legion-rank" />
+		</div>
 	</div>
 </div>
