@@ -2,6 +2,7 @@ import { PlacedPiece, Point } from '$lib/classes'
 import { BlockType } from '$lib/types'
 
 export default class LegionBoard {
+	pieceLimit = $state(0)
 	size = $state({
 		height: 0,
 		width: 0
@@ -24,6 +25,7 @@ export default class LegionBoard {
 
 	constructor(playerLevel: number) {
 		this.setBoardSize(playerLevel)
+		this.setPieceLimit(playerLevel)
 	}
 
 	setBoardSize(playerLevel: number) {
@@ -63,6 +65,64 @@ export default class LegionBoard {
 			new Point(width / 2 - 1, height / 2),
 			new Point(width / 2, height / 2)
 		]
+	}
+
+	setPieceLimit(playerLevel: number) {
+		let pieceLimit = 0
+		if (playerLevel >= 12500) {
+			pieceLimit = 45
+		} else if (playerLevel >= 12000) {
+			pieceLimit = 44
+		} else if (playerLevel >= 11500) {
+			pieceLimit = 43
+		} else if (playerLevel >= 11000) {
+			pieceLimit = 42
+		} else if (playerLevel >= 10500) {
+			pieceLimit = 41
+		} else if (playerLevel >= 10000) {
+			pieceLimit = 40
+		} else if (playerLevel >= 9500) {
+			pieceLimit = 39
+		} else if (playerLevel >= 9000) {
+			pieceLimit = 38
+		} else if (playerLevel >= 8500) {
+			pieceLimit = 37
+		} else if (playerLevel >= 8000) {
+			pieceLimit = 36
+		} else if (playerLevel >= 7500) {
+			pieceLimit = 31
+		} else if (playerLevel >= 7000) {
+			pieceLimit = 30
+		} else if (playerLevel >= 6500) {
+			pieceLimit = 29
+		} else if (playerLevel >= 6000) {
+			pieceLimit = 28
+		} else if (playerLevel >= 5500) {
+			pieceLimit = 27
+		} else if (playerLevel >= 5000) {
+			pieceLimit = 22
+		} else if (playerLevel >= 4500) {
+			pieceLimit = 21
+		} else if (playerLevel >= 4000) {
+			pieceLimit = 20
+		} else if (playerLevel >= 3500) {
+			pieceLimit = 19
+		} else if (playerLevel >= 3000) {
+			pieceLimit = 18
+		} else if (playerLevel >= 2500) {
+			pieceLimit = 13
+		} else if (playerLevel >= 2000) {
+			pieceLimit = 12
+		} else if (playerLevel >= 1500) {
+			pieceLimit = 11
+		} else if (playerLevel >= 1000) {
+			pieceLimit = 10
+		} else if (playerLevel >= 500) {
+			pieceLimit = 9
+		} else {
+			pieceLimit = 0
+		}
+		this.pieceLimit = pieceLimit
 	}
 
 	setSelectedArea(rowIndex: number, colIndex: number, isSelected: boolean) {
