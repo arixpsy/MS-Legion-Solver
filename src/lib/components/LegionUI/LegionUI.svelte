@@ -1,5 +1,22 @@
 <script lang="ts">
+	import type { Snippet } from 'svelte'
 	import bg from '$lib/assets/legion-bg.png'
+
+	type LegionUIProps = {
+		BoardInfoSnippet: Snippet
+		LegionBoardSnippet: Snippet
+		LegionRankSnippet: Snippet
+		PieceInfoSnippet: Snippet
+		PieceSelectorSnippet: Snippet
+	}
+
+	let {
+		BoardInfoSnippet,
+		LegionBoardSnippet,
+		LegionRankSnippet,
+		PieceInfoSnippet,
+		PieceSelectorSnippet
+	}: LegionUIProps = $props()
 </script>
 
 <div
@@ -9,22 +26,21 @@
 	<!-- Left Side -->
 	<div class="w-[582px] flex flex-col">
 		<div class="w-full h-[476px]">
-			<!-- Legion Board -->
-			<slot name="legion-board" />
+			{@render LegionBoardSnippet()}
 		</div>
 		<div class="w-full h-[44px]">
-			<slot name="piece-info" />
+			{@render PieceInfoSnippet()}
 		</div>
 		<div class="w-full h-[194px]">
-			<slot name="piece-selector" />
+			{@render PieceSelectorSnippet()}
 		</div>
 	</div>
 
 	<!-- Right Side -->
 	<div class="w-[392px]">
 		<div class="h-[436px]">
-			<slot name="legion-rank" />
-			<slot name="board-info" />
+			{@render LegionRankSnippet()}
+			{@render BoardInfoSnippet()}
 		</div>
 	</div>
 </div>

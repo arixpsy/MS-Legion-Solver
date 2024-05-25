@@ -19,7 +19,7 @@
 		<p>Blocks available from pieces: {totalShapeBlockCount}</p>
 		<p>Blocks to Fill: {blocksToFill}</p>
 		<label class="flex gap-1">
-			<input type="checkbox" bind:checked={shouldLiveSolve}/> Live Solve
+			<input type="checkbox" bind:checked={shouldLiveSolve} /> Live Solve
 		</label>
 	</div>
 	<div class="flex">

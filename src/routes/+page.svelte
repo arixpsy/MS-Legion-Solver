@@ -31,10 +31,6 @@
 		return pieceCount
 	}
 
-	function setPieceCount(shape: ShapeType, count: number) {
-		shapeCountMap[shape] = count
-	}
-
 	function handleOnClickResetPieceCount() {
 		shapeCountMap = initPieceCount()
 	}
@@ -53,19 +49,41 @@
 	}
 </script>
 
-<div class="min-h-screen flex justify-center items-center flex-col bg-stone-700">
-	<LegionUI>
-		<LegionBoardComponent {board} slot="legion-board" />
-		<PieceSelector {shapeCountMap} {setPieceCount} slot="piece-selector" />
-		<PieceInfoSection {totalPieceCount} pieceLimit={board.pieceLimit} onClickReset={handleOnClickResetPieceCount} slot="piece-info" />
+{#snippet BoardInfoSnippet()}
+	<BoardInfoSection
+		{totalShapeBlockCount}
+		blocksToFill={board.blocksToFill}
+		handleClickSolve={solveLegionBoard}
+		bind:shouldLiveSolve
+	/>
+{/snippet}
 
-		<RankSelector bind:playerLevel slot="legion-rank" />
-		<BoardInfoSection
-			{totalShapeBlockCount}
-			blocksToFill={board.blocksToFill}
-			handleClickSolve={solveLegionBoard}
-			bind:shouldLiveSolve
-			slot="board-info"
-		/>
-	</LegionUI>
+{#snippet LegionBoardSnippet()}
+	<LegionBoardComponent {board} />
+{/snippet}
+
+{#snippet LegionRankSnippet()}
+	<RankSelector bind:playerLevel />
+{/snippet}
+
+{#snippet PieceInfoSnippet()}
+	<PieceInfoSection
+		{totalPieceCount}
+		pieceLimit={board.pieceLimit}
+		onClickReset={handleOnClickResetPieceCount}
+	/>
+{/snippet}
+
+{#snippet PieceSelectorSnippet()}
+	<PieceSelector bind:shapeCountMap {totalPieceCount} pieceLimit={board.pieceLimit} />
+{/snippet}
+
+<div class="min-h-screen flex justify-center items-center flex-col bg-stone-700">
+	<LegionUI
+		{BoardInfoSnippet}
+		{LegionBoardSnippet}
+		{LegionRankSnippet}
+		{PieceInfoSnippet}
+		{PieceSelectorSnippet}
+	/>
 </div>
