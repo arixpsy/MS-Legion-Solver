@@ -8,7 +8,7 @@ export const ShapeType = {
 	Lv200Pirate: 'Lv200Pirate',
 	Lv200Thief: 'Lv200Thief',
 	Lv200Warrior: 'Lv200Warrior',
-	LV250Archer: 'LV250Archer',
+	Lv250Archer: 'Lv250Archer',
 	Lv250Mage: 'Lv250Mage',
 	Lv250Pirate: 'Lv250Pirate',
 	Lv250Thief: 'Lv250Thief',

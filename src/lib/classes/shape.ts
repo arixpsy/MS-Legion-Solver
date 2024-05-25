@@ -26,7 +26,7 @@ export default class Shape {
 		[2, 1],
 		[1, 1]
 	]
-	static LV250Archer = [[1, 1, 2, 1, 1]]
+	static Lv250Archer = [[1, 1, 2, 1, 1]]
 	static Lv250Mage = [
 		[0, 1, 0],
 		[1, 2, 1],

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Shape } from '$lib/classes'
 	import { BlockType, ShapeType } from '$lib/types'
-	import { initPieceCount } from '$lib/utils/functions'
+	import { getPieceColor, initPieceCount } from '$lib/utils/functions'
 
 	type PieceSelectorProps = {
 		shapeCountMap: Record<ShapeType, number>
@@ -22,9 +22,8 @@
 								{@const isEmptyBlock = colValue === BlockType.Empty}
 								<div
 									class="h-2 w-2"
-									class:bg-blue-300={!isEmptyBlock}
-									class:bg-transparent={isEmptyBlock}
 									class:block-border={!isEmptyBlock}
+									style:background-color={!isEmptyBlock ? getPieceColor(s) : 'transparent'}
 								></div>
 							{/each}
 						</div>
