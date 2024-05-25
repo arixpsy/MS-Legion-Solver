@@ -14,16 +14,27 @@
 	let leftOffset = point.x * (21 + 1) - offsetX * (21 + 1)
 </script>
 
-<div class="flex flex-col absolute gap-[1px]" style:top="{topOffset}px" style:left="{leftOffset}px">
+<div
+	class="hover:scale-105 hover:z-30 transition-transform flex flex-col absolute gap-[1px]"
+	style:top="{topOffset}px"
+	style:left="{leftOffset}px"
+>
 	{#each shape.layout as shapeRow}
 		<div class="flex gap-[1px]">
 			{#each shapeRow as colValue}
 				{@const isEmptyBlock = colValue === BlockType.Empty}
 				<div
 					class="h-[21px] w-[21px]"
+					class:block-border={!isEmptyBlock}
 					style:background-color={!isEmptyBlock ? getPieceColor(shape.shapeType) : 'transparent'}
 				></div>
 			{/each}
 		</div>
 	{/each}
 </div>
+
+<style>
+	.block-border {
+		box-shadow: 0 0 0 1px #222222;
+	}
+</style>
