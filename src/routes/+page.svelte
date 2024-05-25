@@ -13,6 +13,7 @@
 
 	let board = new LegionBoard(500)
 	let playerLevel: number = $state(500)
+	let shouldLiveSolve: boolean = $state(false)
 	let shapeCountMap: Record<ShapeType, number> = $state(initPieceCount())
 	let totalPieceCount: number = $derived.by(getPieceCount)
 	let totalShapeBlockCount: number = $derived.by(getPieceBlockCount)
@@ -39,7 +40,7 @@
 	}
 
 	function solveLegionBoard() {
-		const solver = new Solver(board, shapeCountMap)
+		const solver = new Solver(board, shapeCountMap, shouldLiveSolve)
 		solver.solve()
 	}
 </script>
@@ -55,6 +56,7 @@
 			{totalShapeBlockCount}
 			blocksToFill={board.blocksToFill}
 			handleClickSolve={solveLegionBoard}
+			bind:shouldLiveSolve
 			slot="board-info"
 		/>
 	</LegionUI>

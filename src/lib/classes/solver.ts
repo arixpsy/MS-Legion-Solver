@@ -4,10 +4,16 @@ import { BlockType, ShapeType } from '$lib/types'
 export default class Solver {
 	board: LegionBoard
 	pieces: Array<Piece>
+	shouldLiveSolve: boolean
 
-	constructor(board: LegionBoard, shapeCountMap: Record<ShapeType, number>) {
+	constructor(
+		board: LegionBoard,
+		shapeCountMap: Record<ShapeType, number>,
+		shouldLiveSolve: boolean
+	) {
 		this.board = board
 		this.pieces = this.convertShapeCountMapToPieces(shapeCountMap)
+		this.shouldLiveSolve = shouldLiveSolve
 	}
 
 	convertShapeCountMapToPieces(shapeCountMap: Record<ShapeType, number>): Array<Piece> {
@@ -138,7 +144,9 @@ export default class Solver {
 				const placedPiece = new PlacedPiece(currentPoint, currentPiece)
 				this.board.addPlacedPiece(placedPiece)
 				history.push(placedPiece)
-				// await this.sleep(1)
+				if (this.shouldLiveSolve) {
+					await this.sleep(1)
+				}
 
 				if (history.length === this.pieces.length - 1) {
 					return true
