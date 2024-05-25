@@ -2,12 +2,18 @@
 	import { Shape } from '$lib/classes'
 	import { BlockType, ShapeType } from '$lib/types'
 	import { getPieceColor, initPieceCount } from '$lib/utils/functions'
+	import type { EventHandler } from 'svelte/elements'
 
 	type PieceSelectorProps = {
 		shapeCountMap: Record<ShapeType, number>
+		setPieceCount?: (shape: ShapeType, count: number) => void
 	}
 
-	let { shapeCountMap = $bindable(initPieceCount()) }: PieceSelectorProps = $props()
+	let { shapeCountMap = $bindable(initPieceCount()), setPieceCount }: PieceSelectorProps = $props()
+
+	function handleOnChange(shape: ShapeType, count: number) {
+		setPieceCount && setPieceCount(shape, count)
+	}
 </script>
 
 <div class="flex justify-center items-center w-full h-full">
@@ -33,7 +39,9 @@
 				<input
 					type="number"
 					class="w-10 bg-slate-200 rounded-md text-center"
-					bind:value={shapeCountMap[s]}
+					value={shapeCountMap[s]}
+					onchange={(e) => handleOnChange(s, parseInt(e.currentTarget.value))}
+					min={0}
 				/>
 			</div>
 		{/each}

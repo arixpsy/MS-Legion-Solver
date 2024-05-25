@@ -31,6 +31,14 @@
 		return pieceCount
 	}
 
+	function setPieceCount(shape: ShapeType, count: number) {
+		shapeCountMap[shape] = count
+	}
+
+	function handleOnClickResetPieceCount() {
+		shapeCountMap = initPieceCount()
+	}
+
 	function getPieceBlockCount() {
 		let blockCount = 0
 		for (const [shapeType, numOfPieces] of Object.entries(shapeCountMap)) {
@@ -48,8 +56,8 @@
 <div class="min-h-screen flex justify-center items-center flex-col bg-stone-700">
 	<LegionUI>
 		<LegionBoardComponent {board} slot="legion-board" />
-		<PieceSelector {shapeCountMap} slot="piece-selector" />
-		<PieceInfoSection {totalPieceCount} pieceLimit={board.pieceLimit} slot="piece-info" />
+		<PieceSelector {shapeCountMap} {setPieceCount} slot="piece-selector" />
+		<PieceInfoSection {totalPieceCount} pieceLimit={board.pieceLimit} onClickReset={handleOnClickResetPieceCount} slot="piece-info" />
 
 		<RankSelector bind:playerLevel slot="legion-rank" />
 		<BoardInfoSection
