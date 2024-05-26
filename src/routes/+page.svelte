@@ -19,10 +19,11 @@
 	let totalShapeBlockCount: number = $derived.by(getPieceBlockCount)
 	let appState: 'default' | 'solving' | 'solved' = $state('default')
 
-	$effect(() => {
+	function onRankChange() {
 		board.setBoardSize(playerLevel)
 		board.setPieceLimit(playerLevel)
-	})
+		handleClickClear()
+	}
 
 	function getPieceCount() {
 		let pieceCount = 0
@@ -94,7 +95,7 @@
 		{/snippet}
 
 		{#snippet LegionRankSnippet()}
-			<RankSelector bind:playerLevel />
+			<RankSelector bind:playerLevel {onRankChange} isDisabled={appState === 'solving'}/>
 		{/snippet}
 
 		{#snippet PieceInfoSnippet()}

@@ -54,18 +54,22 @@
 
 	type RankSelectorProps = {
 		playerLevel: number
+		isDisabled: boolean
+		onRankChange?: () => void
 	}
 
-	let { playerLevel = $bindable(500) }: RankSelectorProps = $props()
+	let { playerLevel = $bindable(500), isDisabled, onRankChange }: RankSelectorProps = $props()
 	let legionSymbolImage = $derived.by(getLegionSymbol)
 	let legionTitleImage = $derived.by(getLegionTitle)
 
 	function increaseLevel() {
 		playerLevel += 500
+		onRankChange && onRankChange()
 	}
 
 	function decreaseLevel() {
 		playerLevel -= 500
+		onRankChange && onRankChange()
 	}
 
 	function getLegionSymbol() {
@@ -188,11 +192,11 @@
 	style:background-image={`url(${legionTitleImage})`}
 >
 	<div class="absolute top-[15px] left-[10px]">
-		<LeftButton isDisabled={playerLevel === 500} onclick={decreaseLevel} />
+		<LeftButton isDisabled={playerLevel === 500 || isDisabled} onclick={decreaseLevel} />
 	</div>
 
 	<div class="absolute top-[15px] right-[10px]">
-		<RightButton isDisabled={playerLevel === 12500} onclick={increaseLevel} />
+		<RightButton isDisabled={playerLevel === 12500 || isDisabled} onclick={increaseLevel} />
 	</div>
 
 	<img src={legionSymbolImage} alt="legion-rank-symbol" class="absolute top-[80px] left-[20px]" />
