@@ -42,8 +42,10 @@
 
 	async function handleClickSolve() {
 		appState = 'solving'
-		const solver = new Solver(board, shapeCountMap, shouldLiveSolve)
 		let isSolved = false
+		const solver = new Solver(board, shapeCountMap, shouldLiveSolve)
+		await solver.sleep(1)
+
 		try {
 			isSolved = await solver.solve()
 		} catch (e) {

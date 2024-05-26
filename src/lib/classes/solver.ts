@@ -119,12 +119,10 @@ export default class Solver {
 			this.board.removeLastPiece()
 		}
 
-		if (isSolved) {
-			console.log('solved')
-		}
-
 		const endTime = performance.now()
 		console.log(`Solution found in ${endTime - startTime} milliseconds`)
+
+		return isSolved
 	}
 
 	async fillNextPointRecursive(
