@@ -17,6 +17,7 @@
 	let shapeCountMap: Record<ShapeType, number> = $state(initPieceCount())
 	let totalPieceCount: number = $derived.by(getPieceCount)
 	let totalShapeBlockCount: number = $derived.by(getPieceBlockCount)
+	let appState: 'default' | 'solving' | 'solved' = $state('default')
 
 	$effect(() => {
 		board.setBoardSize(playerLevel)
@@ -31,10 +32,6 @@
 		return pieceCount
 	}
 
-	function handleOnClickResetPieceCount() {
-		shapeCountMap = initPieceCount()
-	}
-
 	function getPieceBlockCount() {
 		let blockCount = 0
 		for (const [shapeType, numOfPieces] of Object.entries(shapeCountMap)) {
@@ -43,47 +40,71 @@
 		return blockCount
 	}
 
-	function solveLegionBoard() {
+	async function handleClickSolve() {
+		appState = 'solving'
 		const solver = new Solver(board, shapeCountMap, shouldLiveSolve)
-		solver.solve()
+		let isSolved = false
+		try {
+			isSolved = await solver.solve()
+		} catch (e) {
+			console.log(e)
+		} finally {
+			if (isSolved) {
+				appState = 'solved'
+			} else {
+				appState = 'default'
+			}
+		}
+	}
+
+	function handleClickReset() {
+		board.selectedArea = Array.from({ length: board.size.height }, () =>
+			Array(board.size.width).fill(false)
+		)
+	}
+
+	function handleClickClear() {
+		board.removeAllPieces()
+		appState = 'default'
+	}
+
+	function handleOnClickResetPieceCount() {
+		shapeCountMap = initPieceCount()
 	}
 </script>
 
-{#snippet BoardInfoSnippet()}
-	<BoardInfoSection
-		{totalShapeBlockCount}
-		blocksToFill={board.blocksToFill}
-		handleClickSolve={solveLegionBoard}
-		bind:shouldLiveSolve
-	/>
-{/snippet}
-
-{#snippet LegionBoardSnippet()}
-	<LegionBoardComponent {board} />
-{/snippet}
-
-{#snippet LegionRankSnippet()}
-	<RankSelector bind:playerLevel />
-{/snippet}
-
-{#snippet PieceInfoSnippet()}
-	<PieceInfoSection
-		{totalPieceCount}
-		pieceLimit={board.pieceLimit}
-		onClickReset={handleOnClickResetPieceCount}
-	/>
-{/snippet}
-
-{#snippet PieceSelectorSnippet()}
-	<PieceSelector bind:shapeCountMap {totalPieceCount} pieceLimit={board.pieceLimit} />
-{/snippet}
-
 <div class="min-h-screen flex justify-center items-center flex-col bg-stone-700">
-	<LegionUI
-		{BoardInfoSnippet}
-		{LegionBoardSnippet}
-		{LegionRankSnippet}
-		{PieceInfoSnippet}
-		{PieceSelectorSnippet}
-	/>
+	<LegionUI>
+		{#snippet BoardInfoSnippet()}
+			<BoardInfoSection
+				{appState}
+				{totalShapeBlockCount}
+				blocksToFill={board.blocksToFill}
+				{handleClickSolve}
+				{handleClickReset}
+				{handleClickClear}
+				bind:shouldLiveSolve
+			/>
+		{/snippet}
+
+		{#snippet LegionBoardSnippet()}
+			<LegionBoardComponent {board} />
+		{/snippet}
+
+		{#snippet LegionRankSnippet()}
+			<RankSelector bind:playerLevel />
+		{/snippet}
+
+		{#snippet PieceInfoSnippet()}
+			<PieceInfoSection
+				{totalPieceCount}
+				pieceLimit={board.pieceLimit}
+				onClickReset={handleOnClickResetPieceCount}
+			/>
+		{/snippet}
+
+		{#snippet PieceSelectorSnippet()}
+			<PieceSelector bind:shapeCountMap {totalPieceCount} pieceLimit={board.pieceLimit} />
+		{/snippet}
+	</LegionUI>
 </div>
