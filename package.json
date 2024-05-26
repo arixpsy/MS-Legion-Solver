@@ -17,6 +17,7 @@
 		"@sveltejs/kit": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^3.0.0",
 		"@types/eslint": "^8.56.0",
+		"@types/luxon": "^3.4.2",
 		"@typescript-eslint/eslint-plugin": "^7.0.0",
 		"@typescript-eslint/parser": "^7.0.0",
 		"autoprefixer": "^10.4.19",
@@ -38,6 +39,7 @@
 	"dependencies": {
 		"2d-array-rotation": "^2.1.1",
 		"clsx": "^2.1.1",
+		"luxon": "^3.4.4",
 		"nanoid": "^5.0.7",
 		"tailwind-merge": "^2.3.0"
 	}
