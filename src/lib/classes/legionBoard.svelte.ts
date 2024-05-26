@@ -171,4 +171,8 @@ export default class LegionBoard {
 			}
 		}
 	}
+
+	removeAllPieces() {
+		Array.from({ length: this.placedPieces.length }, () => this.removeLastPiece())
+	}
 }
