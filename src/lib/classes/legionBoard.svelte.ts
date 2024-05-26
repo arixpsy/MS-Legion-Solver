@@ -9,9 +9,9 @@ export default class LegionBoard {
 	})
 	selectedArea: boolean[][] = $state([[]])
 	filledArea: boolean[][] = $state([[]])
-	filledPoints: Array<Point> = []
 	middlePoints: Array<Point> = $state([])
 	placedPieces: Array<PlacedPiece> = $state([])
+	pointsToBeFilled: Set<string> = $state(new Set([]))
 
 	blocksToFill: number = $derived.by(() => {
 		let count = 0
@@ -127,6 +127,11 @@ export default class LegionBoard {
 
 	setSelectedArea(rowIndex: number, colIndex: number, isSelected: boolean) {
 		this.selectedArea[rowIndex][colIndex] = isSelected
+		if (isSelected) {
+			this.pointsToBeFilled.add([rowIndex, colIndex].join('-'))
+		} else {
+			this.pointsToBeFilled.delete([rowIndex, colIndex].join('-'))
+		}
 	}
 
 	addPlacedPiece(placedPiece: PlacedPiece) {
@@ -144,7 +149,7 @@ export default class LegionBoard {
 					const boardY = point.y - (pieceMiddleOffset.y - row)
 
 					this.filledArea[boardY][boardX] = true
-					this.filledPoints.push(new Point(boardX, boardY))
+					this.pointsToBeFilled.delete([boardY, boardX].join('-'))
 				}
 			}
 		}
@@ -166,7 +171,7 @@ export default class LegionBoard {
 					const boardY = point.y - (pieceMiddleOffset.y - row)
 
 					this.filledArea[boardY][boardX] = false
-					this.filledPoints.pop()
+					this.pointsToBeFilled.add([boardY, boardX].join('-'))
 				}
 			}
 		}
@@ -174,5 +179,29 @@ export default class LegionBoard {
 
 	removeAllPieces() {
 		Array.from({ length: this.placedPieces.length }, () => this.removeLastPiece())
+	}
+
+	checkForSingleIsolatedPoints(): Point | undefined {
+		for (const pointStr of this.pointsToBeFilled.values()) {
+			const [rowStr, colStr] = pointStr.split('-')
+			const row = parseInt(rowStr)
+			const col = parseInt(colStr)
+
+			const isTopFree = row > 0 && this.selectedArea[row - 1][col] && !this.filledArea[row - 1][col]
+			const isBottomFree =
+				row < this.selectedArea.length - 1 &&
+				this.selectedArea[row + 1][col] &&
+				!this.filledArea[row + 1][col]
+			const isLeftFree =
+				col > 0 && this.selectedArea[row][col - 1] && !this.filledArea[row][col - 1]
+			const isRightFree =
+				col < this.selectedArea[row].length - 1 &&
+				this.selectedArea[row][col + 1] &&
+				!this.filledArea[row][col + 1]
+			
+			if(!isTopFree && !isBottomFree && !isLeftFree && !isRightFree) return new Point(col, row)
+		}
+
+		return undefined
 	}
 }

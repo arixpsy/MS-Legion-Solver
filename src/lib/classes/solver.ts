@@ -147,18 +147,25 @@ export default class Solver {
 				}
 
 				const newPieceCombinations = pieceCombinations.filter((p) => p.id !== currentPiece.id)
+				const hasIsolatedPoint = this.board.checkForSingleIsolatedPoints()
+				const singleBlockPiece = newPieceCombinations.filter((p) => p.shape.shapeType === 'Lv60')
 
-				const newPermutation = await this.fillNextPointRecursive(
-					newPieceCombinations,
-					history,
-					this.findNextPointToFill()
-				)
-
-				if (newPermutation) {
-					return true
-				} else {
+				if (hasIsolatedPoint && singleBlockPiece.length === 0) {
 					this.board.removeLastPiece()
 					history.pop()
+				} else {
+					const newPermutation = await this.fillNextPointRecursive(
+						newPieceCombinations,
+						history,
+						this.findNextPointToFill()
+					)
+
+					if (newPermutation) {
+						return true
+					} else {
+						this.board.removeLastPiece()
+						history.pop()
+					}
 				}
 			}
 

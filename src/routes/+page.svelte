@@ -47,7 +47,7 @@
 		appState = 'solving'
 		let isSolved = false
 		const solver = new Solver(board, shapeCountMap, shouldLiveSolve)
-		await solver.sleep(1)
+		await solver.sleep(100)
 
 		try {
 			isSolved = await solver.solve()
