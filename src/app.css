@@ -4,7 +4,8 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
+* {
 	font-family: 'Baloo Tamma 2', system-ui;
 	font-optical-sizing: auto;
+	line-height: normal;
 }
