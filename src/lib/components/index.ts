@@ -1,4 +1,5 @@
 export { default as BoardInfoSection } from './BoardInfoSection/BoardInfoSection.svelte'
+export { default as CreditsSection } from './CreditsSection/CreditsSection.svelte'
 export { default as LegionBoard } from './LegionBoard/LegionBoard.svelte'
 export { default as LegionUI } from './LegionUI/LegionUI.svelte'
 export { default as PieceInfoSection } from './PieceInfoSection/PieceInfoSection.svelte'

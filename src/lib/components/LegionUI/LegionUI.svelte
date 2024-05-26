@@ -4,6 +4,7 @@
 
 	type LegionUIProps = {
 		BoardInfoSnippet: Snippet
+		CreditsSnippet: Snippet
 		LegionBoardSnippet: Snippet
 		LegionRankSnippet: Snippet
 		PieceInfoSnippet: Snippet
@@ -12,6 +13,7 @@
 
 	let {
 		BoardInfoSnippet,
+		CreditsSnippet,
 		LegionBoardSnippet,
 		LegionRankSnippet,
 		PieceInfoSnippet,
@@ -41,6 +43,10 @@
 		<div class="h-[436px]">
 			{@render LegionRankSnippet()}
 			{@render BoardInfoSnippet()}
+		</div>
+
+		<div class="h-[270px] mt-[10px]">
+			{@render CreditsSnippet()}
 		</div>
 	</div>
 </div>

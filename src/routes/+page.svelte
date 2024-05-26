@@ -2,6 +2,7 @@
 	import { LegionBoard, Shape, Solver } from '$lib/classes'
 	import {
 		BoardInfoSection,
+		CreditsSection,
 		LegionBoard as LegionBoardComponent,
 		LegionUI,
 		PieceInfoSection,
@@ -56,7 +57,7 @@
 			if (isSolved) {
 				appState = 'solved'
 				const endTime = performance.now()
-				console.log(`Solution found in ${endTime - startTime} milliseconds`)
+				console.log(`${endTime - startTime} ms`)
 			} else {
 				appState = 'default'
 			}
@@ -80,7 +81,7 @@
 </script>
 
 <div class="min-h-screen flex justify-center items-center flex-col bg-stone-700">
-	<h1 class='text-4xl mb-3 text-white'>MapleStory Legion Board Solver</h1>
+	<h1 class="text-4xl mb-3 text-white">MapleStory Legion Board Solver</h1>
 	<LegionUI>
 		{#snippet BoardInfoSnippet()}
 			<BoardInfoSection
@@ -92,6 +93,10 @@
 				{handleClickClear}
 				bind:shouldLiveSolve
 			/>
+		{/snippet}
+
+		{#snippet CreditsSnippet()}
+			<CreditsSection />
 		{/snippet}
 
 		{#snippet LegionBoardSnippet()}
