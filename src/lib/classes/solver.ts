@@ -117,7 +117,7 @@ export default class Solver {
 
 			this.board.removeLastPiece()
 		}
-		
+
 		return isSolved
 	}
 
