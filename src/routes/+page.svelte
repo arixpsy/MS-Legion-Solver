@@ -42,6 +42,7 @@
 	}
 
 	async function handleClickSolve() {
+		const startTime = performance.now()
 		appState = 'solving'
 		let isSolved = false
 		const solver = new Solver(board, shapeCountMap, shouldLiveSolve)
@@ -54,6 +55,8 @@
 		} finally {
 			if (isSolved) {
 				appState = 'solved'
+				const endTime = performance.now()
+				console.log(`Solution found in ${endTime - startTime} milliseconds`)
 			} else {
 				appState = 'default'
 			}
@@ -77,6 +80,7 @@
 </script>
 
 <div class="min-h-screen flex justify-center items-center flex-col bg-stone-700">
+	<h1 class='text-4xl mb-3 text-white'>MapleStory Legion Board Solver</h1>
 	<LegionUI>
 		{#snippet BoardInfoSnippet()}
 			<BoardInfoSection
@@ -95,7 +99,7 @@
 		{/snippet}
 
 		{#snippet LegionRankSnippet()}
-			<RankSelector bind:playerLevel {onRankChange} isDisabled={appState === 'solving'}/>
+			<RankSelector bind:playerLevel {onRankChange} isDisabled={appState === 'solving'} />
 		{/snippet}
 
 		{#snippet PieceInfoSnippet()}

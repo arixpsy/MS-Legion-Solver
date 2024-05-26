@@ -80,7 +80,6 @@ export default class Solver {
 
 		if (possibleFirstPlacedPieces.length === 0) throw Error('Board cannot be solved')
 
-		const startTime = performance.now()
 		let isSolved = false
 
 		for (const firstPlacedPiece of possibleFirstPlacedPieces) {
@@ -118,10 +117,7 @@ export default class Solver {
 
 			this.board.removeLastPiece()
 		}
-
-		const endTime = performance.now()
-		console.log(`Solution found in ${endTime - startTime} milliseconds`)
-
+		
 		return isSolved
 	}
 
