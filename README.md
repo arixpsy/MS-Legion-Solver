@@ -1,38 +1,54 @@
-# create-svelte
+# MapleStory Legion Board Solver
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+![MapleStory Legion Board Solver](static/ms-legion-solver.png)
 
-## Creating a project
+A web-based solver for the MapleStory Legion Board, designed to help players optimize their piece placements for maximum efficiency.
 
-If you're seeing this, you've probably already done this step. Congrats!
+## Tech Stack
+- **SvelteKit** — Application framework
+- **Svelte 5** — UI components
+- **TypeScript** — Type safety
+- **Vite** — Build tool
+- **Tailwind CSS** — Utility-first CSS framework
+- **PostCSS** — CSS processing
+- **Vitest** — Unit testing
+- **ESLint & Prettier** — Linting and code formatting
+- **Luxon** — Date/time utilities
+- **nanoid** — Unique ID generation
+- **clsx** — Conditional classNames
+- **2d-array-rotation** — Array manipulation
+- **tailwind-merge** — Tailwind class merging
 
+## Features
+- Interactive Legion board UI
+- Live solve and optimization
+- Reset and clear options
+
+## Getting Started
+
+### Prerequisites
+- [Node.js](https://nodejs.org/) (v16 or higher recommended)
+
+### Installation
 ```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
+pnpm install
 ```
 
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
+### Running the App
 ```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+pnpm dev
 ```
+Then open [http://localhost:5173](http://localhost:5173) in your browser.
 
-## Building
+## Project Structure
+- `src/` — Main source code
+  - `lib/` — Components, classes, assets, types, and utilities
+  - `routes/` — SvelteKit routes
+- `static/` — Static assets (favicon, images)
 
-To create a production version of your app:
+## Credits
+- **Inspired by:** [Xenogen](https://github.com/Xenogents/LegionSolver)
+- **Special thanks:** [Wickker](https://github.com/Wickker)
 
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+## License
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
