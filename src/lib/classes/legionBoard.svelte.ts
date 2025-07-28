@@ -181,27 +181,44 @@ export default class LegionBoard {
 		Array.from({ length: this.placedPieces.length }, () => this.removeLastPiece())
 	}
 
-	checkForSingleIsolatedPoints(): Point | undefined {
+	getIslands(): Map<number, Array<Array<Point>>> {
+		const pointsChecked = new Set()
+		const sizeToIslandsMap = new Map<number, Array<Array<Point>>>()
+		let island: Array<Point> = []
+
+		function checkTileAt(point: Point, pointsToBeFilled: Set<string>) {
+			const pointStr = `${point.y}-${point.x}`
+			if (pointsChecked.has(pointStr)) return
+			if (!pointsToBeFilled.has(pointStr)) return
+
+			island.push(point)
+			pointsChecked.add(pointStr)
+
+			checkTileAt(new Point(point.x, point.y + 1), pointsToBeFilled)
+			checkTileAt(new Point(point.x, point.y - 1), pointsToBeFilled)
+			checkTileAt(new Point(point.x + 1, point.y), pointsToBeFilled)
+			checkTileAt(new Point(point.x - 1, point.y), pointsToBeFilled)
+		}
+
 		for (const pointStr of this.pointsToBeFilled.values()) {
 			const [rowStr, colStr] = pointStr.split('-')
 			const row = parseInt(rowStr)
 			const col = parseInt(colStr)
 
-			const isTopFree = row > 0 && this.selectedArea[row - 1][col] && !this.filledArea[row - 1][col]
-			const isBottomFree =
-				row < this.selectedArea.length - 1 &&
-				this.selectedArea[row + 1][col] &&
-				!this.filledArea[row + 1][col]
-			const isLeftFree =
-				col > 0 && this.selectedArea[row][col - 1] && !this.filledArea[row][col - 1]
-			const isRightFree =
-				col < this.selectedArea[row].length - 1 &&
-				this.selectedArea[row][col + 1] &&
-				!this.filledArea[row][col + 1]
-			
-			if(!isTopFree && !isBottomFree && !isLeftFree && !isRightFree) return new Point(col, row)
+			checkTileAt(new Point(col, row), this.pointsToBeFilled)
+
+			if (island.length > 0) {
+				if (sizeToIslandsMap.has(island.length)) {
+					const existingIslands = sizeToIslandsMap.get(island.length)!
+					sizeToIslandsMap.set(island.length, [...existingIslands, island])
+				} else {
+					sizeToIslandsMap.set(island.length, [island])
+				}
+			}
+
+			island = []
 		}
 
-		return undefined
+		return sizeToIslandsMap
 	}
 }

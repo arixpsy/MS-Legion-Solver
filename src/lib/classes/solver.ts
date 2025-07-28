@@ -86,11 +86,16 @@ export default class Solver {
 			const piecesLeft = this.pieces.filter((p) => p.id !== firstPlacedPiece.id)
 			this.board.addPlacedPiece(firstPlacedPiece)
 
-			const nextPoint = this.findNextPointToFill()
-			if (!nextPoint) {
+			const islands = this.board.getIslands()
+			if (islands.size === 0) {
 				isSolved = true
 				break
 			}
+			const islandsArray = islands
+				.values()
+				.toArray()
+				.flat()
+				.sort((a, b) => a.length - b.length)
 
 			const pieceCombinations: Array<Piece> = []
 
@@ -108,7 +113,7 @@ export default class Solver {
 				}
 			}
 
-			const solved = await this.fillNextPointRecursive(pieceCombinations, [], nextPoint)
+			const solved = await this.fillNextPointRecursive(pieceCombinations, [], islandsArray)
 
 			if (solved) {
 				isSolved = true
@@ -124,12 +129,13 @@ export default class Solver {
 	async fillNextPointRecursive(
 		pieceCombinations: Array<Piece>,
 		history: Array<PlacedPiece>,
-		point: Point | undefined
+		currentIslands: Array<Array<Point>>
 	): Promise<boolean> {
-		if (!point) return false
 		let pieceIndex = 0
 		let currentPiece = pieceCombinations[pieceIndex]
-		let currentPoint: Point | undefined = point
+		let islandIndex = 0
+		let islandPointIndex = 0
+		let currentPoint: Point | undefined = currentIslands[islandIndex][islandPointIndex]
 
 		while (currentPoint !== undefined) {
 			const canFitPiece = this.canPlacePiece(currentPoint, currentPiece)
@@ -146,18 +152,47 @@ export default class Solver {
 					return true
 				}
 
+				const islands = this.board.getIslands()
 				const newPieceCombinations = pieceCombinations.filter((p) => p.id !== currentPiece.id)
-				const hasIsolatedPoint = this.board.checkForSingleIsolatedPoints()
+				const hasSingleIsolatedPoint = (islands.has(1) ? islands.get(1)! : []).length > 0
+				const hasDoubleIsolatedPoint = (islands.has(2) ? islands.get(2)! : []).length > 0
+				const hasTripleIsolatedPoint = (islands.has(3) ? islands.get(3)! : []).length > 0
 				const singleBlockPiece = newPieceCombinations.filter((p) => p.shape.shapeType === 'Lv60')
+				const doubleBlockPiece = newPieceCombinations.filter((p) => p.shape.shapeType === 'Lv100')
+				const tripleBlockPiece = newPieceCombinations.filter(
+					(p) =>
+						p.shape.shapeType === 'Lv140ArcherMageThief' ||
+						p.shape.shapeType === 'Lv140PirateWarrior'
+				)
 
-				if (hasIsolatedPoint && singleBlockPiece.length === 0) {
+				const hasNoSingleBlockForSingleIsoPoint =
+					hasSingleIsolatedPoint && singleBlockPiece.length === 0
+				const hasNoDoubleBlockForDoubleIsoPoint =
+					hasDoubleIsolatedPoint && doubleBlockPiece.length === 0
+				const hasNoTripleBlockForTripleIsoPoint =
+					hasTripleIsolatedPoint &&
+					tripleBlockPiece.length === 0 &&
+					doubleBlockPiece.length < 1 &&
+					singleBlockPiece.length < 3
+
+				if (
+					hasNoSingleBlockForSingleIsoPoint ||
+					hasNoDoubleBlockForDoubleIsoPoint ||
+					hasNoTripleBlockForTripleIsoPoint
+				) {
 					this.board.removeLastPiece()
 					history.pop()
 				} else {
+					const newIslandsArray = islands
+						.values()
+						.toArray()
+						.flat()
+						.sort((a, b) => a.length - b.length)
+
 					const newPermutation = await this.fillNextPointRecursive(
 						newPieceCombinations,
 						history,
-						this.findNextPointToFill()
+						newIslandsArray
 					)
 
 					if (newPermutation) {
@@ -169,31 +204,33 @@ export default class Solver {
 				}
 			}
 
+			// try next piece
 			if (pieceIndex < pieceCombinations.length - 1) {
 				pieceIndex = pieceIndex + 1
 				currentPiece = pieceCombinations[pieceIndex]
-			} else {
-				currentPoint = this.findNextPointToFill(currentPoint)
+			}
+
+			// try next point in the current island
+			else if (islandPointIndex < currentIslands[islandIndex].length - 1) {
+				islandPointIndex += 1
+				currentPoint = currentIslands[islandIndex][islandPointIndex]
 				pieceIndex = 0
 				currentPiece = pieceCombinations[pieceIndex]
+			}
+
+			// try next island
+			else if (islandIndex < currentIslands.length - 1) {
+				islandPointIndex = 0
+				islandIndex += 1
+				currentPoint = currentIslands[islandIndex][islandPointIndex]
+				pieceIndex = 0
+				currentPiece = pieceCombinations[pieceIndex]
+			} else {
+				return false
 			}
 		}
 
 		return false
-	}
-
-	findNextPointToFill(currentPoint?: Point): Point | undefined {
-		for (let row = 0; row < this.board.filledArea.length; row++) {
-			if (currentPoint && row < currentPoint.y) continue
-			for (let col = 0; col < this.board.filledArea[row].length; col++) {
-				if (!this.board.selectedArea[row][col]) continue
-				if (currentPoint && row <= currentPoint.y && col <= currentPoint.x) continue
-				if (!this.board.filledArea[row][col]) {
-					return new Point(col, row)
-				}
-			}
-		}
-		return undefined
 	}
 
 	canPlacePiece(point: Point, piece: Piece): boolean {
